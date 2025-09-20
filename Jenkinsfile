@@ -51,10 +51,10 @@ pipeline {
         withCredentials([sshUserPrivateKey(credentialsId: '89540105-8385-4e62-ad9f-d0e404c254d8',
                                            keyFileVariable: 'SSH_KEY')]) {
           bat """
-            ssh -i %SSH_KEY% -o StrictHostKeyChecking=no %EC2_HOST% ^
-              "aws ecr get-login-password --region %AWS_REGION% | docker login --username AWS --password-stdin %AWS_ACCOUNT_ID%.dkr.ecr.%AWS_REGION%.amazonaws.com && ^
-               docker pull %ECR_URI%:%IMAGE_TAG% && ^
-               docker stop visitorapp || true && docker rm visitorapp || true && ^
+            ssh -i %SSH_KEY% -o StrictHostKeyChecking=no %EC2_HOST% \
+              "aws ecr get-login-password --region %AWS_REGION% | docker login --username AWS --password-stdin %AWS_ACCOUNT_ID%.dkr.ecr.%AWS_REGION%.amazonaws.com && \
+               docker pull %ECR_URI%:%IMAGE_TAG% && \
+               (docker stop visitorapp || true) && (docker rm visitorapp || true) && \
                docker run -d -p 80:5000 --name visitorapp -e AWS_REGION=%AWS_REGION% -e DDB_TABLE=%DDB_TABLE% %ECR_URI%:%IMAGE_TAG%"
           """
         }
