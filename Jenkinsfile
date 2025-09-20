@@ -7,7 +7,7 @@ pipeline {
     REPO_NAME = 'visitor-counter-app'
     IMAGE_TAG = "${BUILD_NUMBER}"
     DDB_TABLE = 'VisitorCount'
-    EC2_HOST = 'ec2-user@3.90.86.30'
+    EC2_HOST = 'ubuntu@54.81.240.222'
     ECR_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPO_NAME}"
   }
 
@@ -63,3 +63,4 @@ pipeline {
     }
   }
 }
+
