@@ -18,6 +18,7 @@ pipeline {
 
     stage('Build image') {
       steps {
+        sh "echo building docker image"
         sh "docker build -t ${REPO_NAME}:${IMAGE_TAG} ."
       }
     }
