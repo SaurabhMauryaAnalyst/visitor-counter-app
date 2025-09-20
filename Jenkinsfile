@@ -5,9 +5,10 @@ pipeline {
     AWS_REGION = 'us-east-1'
     AWS_ACCOUNT_ID = '159348431711'
     REPO_NAME = 'visitor-counter-app'
+    IMAGE_TAG = "${BUILD_NUMBER}"
     DDB_TABLE = 'VisitorCount'
     EC2_HOST = 'ec2-user@3.90.86.30'
-    ECR_URI = "%AWS_ACCOUNT_ID%.dkr.ecr.%AWS_REGION%.amazonaws.com/%REPO_NAME%"
+    ECR_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPO_NAME}"
   }
 
   stages {
@@ -19,8 +20,8 @@ pipeline {
 
     stage('Build image') {
       steps {
-        bat "docker --version"
-        bat "docker build -t %REPO_NAME%:${BUILD_NUMBER} ."
+        bat "echo Building docker image"
+        bat "docker build -t %REPO_NAME%:%IMAGE_TAG% ."
       }
     }
 
@@ -60,5 +61,3 @@ pipeline {
     }
   }
 }
-
-
