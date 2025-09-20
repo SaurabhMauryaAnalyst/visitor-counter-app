@@ -20,7 +20,7 @@ pipeline {
 
     stage('Build image') {
       steps {
-        bat "echo Building docker image"
+        bat "docker --version"
         bat "docker build -t %REPO_NAME%:%IMAGE_TAG% ."
       }
     }
@@ -61,3 +61,4 @@ pipeline {
     }
   }
 }
+
